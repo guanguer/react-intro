@@ -1,12 +1,22 @@
 import React from 'react';
 import { render } from 'react-dom';
+import { BrowserRouter, Route, Switch } from 'react-router-dom';
 
-const MyComponent = function MyComponent() {
-    return React.createElement(
-        'div',
-        null,
-        React.createElement('h1', null, 'My first React component')
-    );
-};
+import Landing from './landing';
+import Search from './search';
 
-render(React.createElement(MyComponent), document.getElementById('app'));
+const NotFound = () => <h1>404</h1>;
+
+const App = () => (
+    <BrowserRouter>
+        <div className="app">
+            <Switch>
+                <Route exact path="/" component={Landing} />
+                <Route path="/search" component={Search} />
+                <Route component={NotFound} />
+            </Switch>
+        </div>
+    </BrowserRouter>
+);
+
+render(<App />, document.getElementById('app'));
