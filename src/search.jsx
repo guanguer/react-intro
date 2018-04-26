@@ -1,4 +1,6 @@
-import React from 'react';
+// @flow
+
+import React, { Component } from 'react';
 import styled from 'styled-components';
 
 import data from '../data.json';
@@ -11,16 +13,20 @@ const ShowList = styled.div`
     align-content: stretch;
 `;
 
-class Search extends React.Component {
-    state = {
+type State = { searchTerm: string };
+
+class Search extends Component<{}, State> {
+    state: State = {
         searchTerm: ''
     };
 
-    handleSearchTermChange = event => {
-        this.setState({ searchTerm: event.target.value });
+    handleSearchTermChange = (
+        event: SyntheticKeyboardEvent<HTMLInputElement>
+    ) => {
+        this.setState({ searchTerm: event.currentTarget.value });
     };
 
-    isSearchTermInTitleOrDescription = show =>
+    isSearchTermInTitleOrDescription = (show: Show) =>
         `${show.title} ${show.description}`
             .toUpperCase()
             .indexOf(this.state.searchTerm.toUpperCase()) >= 0;
