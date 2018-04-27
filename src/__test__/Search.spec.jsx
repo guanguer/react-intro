@@ -4,34 +4,20 @@ import toJson from 'enzyme-to-json';
 import Adapter from 'enzyme-adapter-react-16';
 
 import data from '../../data.json';
-import Search from '../search';
-import ShowCard from '../show-card';
+import Search from '../Search';
+import Header from '../Header';
+import ShowCard from '../ShowCard';
 
 Enzyme.configure({ adapter: new Adapter() });
 
 describe('Search', () => {
     it('Search renders correctly', () => {
-        const component = shallow(<Search />);
+        const component = shallow(<Search shows={data.shows} />);
         expect(toJson(component)).toMatchSnapshot();
     });
 
     it('Search should render correct amount of shows', () => {
-        const component = shallow(<Search />);
+        const component = shallow(<Search shows={data.shows} />);
         expect(data.shows.length).toEqual(component.find(ShowCard).length);
-    });
-
-    it('Search should render correct amount of shows based on search term ', () => {
-        const component = shallow(<Search />);
-        const searchWord = 'black';
-        component
-            .find('input')
-            .simulate('change', { target: { value: searchWord } });
-        const shows = data.shows.filter(
-            show =>
-                `${show.title} ${show.description}`
-                    .toUpperCase()
-                    .indexOf(searchWord.toUpperCase()) >= 0
-        );
-        expect(component.find(ShowCard).length).toEqual(shows.length);
     });
 });

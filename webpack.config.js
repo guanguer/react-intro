@@ -14,7 +14,8 @@ module.exports = {
     devtool: 'cheap-eval-source-map',
     output: {
         path: path.join(__dirname, 'dist'),
-        filename: 'bundle.js'
+        filename: 'bundle.js',
+        publicPath: '/'
     },
     devServer: {
         hot: true,
@@ -33,11 +34,11 @@ module.exports = {
         rules: [
             {
                 enforce: 'pre',
-                test: /\.jsx?$/,
+                test: /\.(js|jsx)?$/,
                 loader: 'eslint-loader'
             },
             {
-                test: /\.jsx?$/,
+                test: /\.(js|jsx)?$/,
                 exclude: [path.resolve(__dirname, 'src/__test__')],
                 loader: 'babel-loader'
             }

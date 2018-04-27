@@ -3,8 +3,8 @@
 import React, { Component } from 'react';
 import styled from 'styled-components';
 
-import data from '../data.json';
-import ShowCard from './show-card';
+import Header from './Header';
+import ShowCard from './ShowCard';
 
 const ShowList = styled.div`
     display: flex;
@@ -13,10 +13,8 @@ const ShowList = styled.div`
     align-content: stretch;
 `;
 
-type State = { searchTerm: string };
-
-class Search extends Component<{}, State> {
-    state: State = {
+class Search extends Component<SearchProps, SearchState> {
+    state: SearchState = {
         searchTerm: ''
     };
 
@@ -34,17 +32,13 @@ class Search extends Component<{}, State> {
     render() {
         return (
             <div className="search">
-                <header>
-                    <h1>svideo</h1>
-                    <input
-                        type="text"
-                        value={this.state.searchTerm}
-                        onChange={this.handleSearchTermChange}
-                        placeholder="Search"
-                    />
-                </header>
+                <Header
+                    searchTerm={this.state.searchTerm}
+                    showSearch
+                    handleSearchTermChange={this.handleSearchTermChange}
+                />
                 <ShowList>
-                    {data.shows
+                    {this.props.shows
                         .filter(show =>
                             this.isSearchTermInTitleOrDescription(show)
                         )

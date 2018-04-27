@@ -2,8 +2,7 @@
 
 import React from 'react';
 import { render } from 'react-dom';
-
-import App from './app';
+import App from './App';
 
 const renderApp = () => {
     const element = document.getElementById('app');
