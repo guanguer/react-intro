@@ -37,7 +37,7 @@ class ShowCard extends Component<DetailProps> {
     render() {
         const { imdbID, poster, title, year, description } = this.props.show;
         return (
-            <Wrapper to={`/details/${imdbID}`}>
+            <Wrapper className="show-card" to={`/details/${imdbID}`}>
                 <Image
                     src={`img/posters/${poster}`}
                     alt={`${title} Show Poster`}

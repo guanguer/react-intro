@@ -1,23 +1,48 @@
+// @flow
+
 import React from 'react';
-import Enzyme, { shallow } from 'enzyme';
-import toJson from 'enzyme-to-json';
+import { Provider } from 'react-redux';
+import { MemoryRouter } from 'react-router-dom';
+
+import Enzyme, { shallow, render } from 'enzyme';
 import Adapter from 'enzyme-adapter-react-16';
 
-import data from '../../data.json';
-import Search from '../Search';
-import Header from '../Header';
+import Search, { Unwrapped as UnwrappedSearch } from '../Search';
 import ShowCard from '../ShowCard';
+import data from '../../data.json';
+import store from './../store';
+import { setSearchTerm } from './../actionCreators';
 
 Enzyme.configure({ adapter: new Adapter() });
 
-describe('Search', () => {
-    it('Search renders correctly', () => {
-        const component = shallow(<Search shows={data.shows} />);
-        expect(toJson(component)).toMatchSnapshot();
-    });
+test('Search renders correctly', () => {
+    const component = shallow(
+        <UnwrappedSearch searchTerm="" shows={data.shows} />
+    );
+    expect(component).toMatchSnapshot();
+});
 
-    it('Search should render correct amount of shows', () => {
-        const component = shallow(<Search shows={data.shows} />);
-        expect(data.shows.length).toEqual(component.find(ShowCard).length);
-    });
+test('Search should render correct amount of shows', () => {
+    const component = shallow(
+        <UnwrappedSearch searchTerm="" shows={data.shows} />
+    );
+    expect(data.shows.length).toEqual(component.find(ShowCard).length);
+});
+
+test('Search should render correct amount of shows based on search', () => {
+    const searchWord = 'New York';
+    store.dispatch(setSearchTerm(searchWord));
+    const component = render(
+        <Provider store={store}>
+            <MemoryRouter>
+                <Search shows={data.shows} />
+            </MemoryRouter>
+        </Provider>
+    );
+    const showCount = data.shows.filter(show =>
+        `${show.title.toUpperCase()} ${show.description.toUpperCase()}`.includes(
+            searchWord.toUpperCase()
+        )
+    ).length;
+    expect(component.find('.show-card').length).toEqual(showCount);
 });

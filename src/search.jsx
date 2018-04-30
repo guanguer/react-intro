@@ -1,6 +1,7 @@
 // @flow
 
-import React, { Component } from 'react';
+import React from 'react';
+import { connect } from 'react-redux';
 import styled from 'styled-components';
 
 import Header from './Header';
@@ -13,42 +14,26 @@ const ShowList = styled.div`
     align-content: stretch;
 `;
 
-class Search extends Component<SearchProps, SearchState> {
-    state: SearchState = {
-        searchTerm: ''
-    };
+const isSearchTermInTitleOrDescription = (show, searchTerm) =>
+    `${show.title.toUpperCase()} ${show.description.toUpperCase()}`.includes(
+        searchTerm.toUpperCase()
+    );
 
-    handleSearchTermChange = (
-        event: SyntheticKeyboardEvent<HTMLInputElement>
-    ) => {
-        this.setState({ searchTerm: event.currentTarget.value });
-    };
+const Search = (props: SearchProps) => (
+    <div className="search">
+        <Header showSearch />
+        <ShowList>
+            {props.shows
+                .filter(show =>
+                    isSearchTermInTitleOrDescription(show, props.searchTerm)
+                )
+                .map(show => <ShowCard key={show.imdbID} show={show} />)}
+        </ShowList>
+    </div>
+);
 
-    isSearchTermInTitleOrDescription = (show: Show) =>
-        `${show.title} ${show.description}`
-            .toUpperCase()
-            .indexOf(this.state.searchTerm.toUpperCase()) >= 0;
+const mapStateToProps = state => ({ searchTerm: state.searchTerm });
 
-    render() {
-        return (
-            <div className="search">
-                <Header
-                    searchTerm={this.state.searchTerm}
-                    showSearch
-                    handleSearchTermChange={this.handleSearchTermChange}
-                />
-                <ShowList>
-                    {this.props.shows
-                        .filter(show =>
-                            this.isSearchTermInTitleOrDescription(show)
-                        )
-                        .map(show => (
-                            <ShowCard key={show.imdbID} show={show} />
-                        ))}
-                </ShowList>
-            </div>
-        );
-    }
-}
+export const Unwrapped = Search;
 
-export default Search;
+export default connect(mapStateToProps)(Search);

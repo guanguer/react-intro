@@ -1,12 +1,10 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`Search Search renders correctly 1`] = `
+exports[`Search renders correctly 1`] = `
 <div
   className="search"
 >
-  <Header
-    handleSearchTermChange={[Function]}
-    searchTerm=""
+  <Connect(Header)
     showSearch={true}
   />
   <styled.div>
