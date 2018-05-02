@@ -9,14 +9,16 @@
         "format":
             "prettier --write --single-quote --print-width=80 --parser=flow src/**/*.{js,jsx}",
         "lint": "eslint src/**/*.{js,jsx} --quiet",
-        "build": "webpack",
-        "watch": "webpack --watch",
+        "build": "SET NODE_ENV=production&&webpack",
+        "build:dev": "SET NODE_ENV=development&&webpack",
+        "watch": "SET NODE_ENV=development&&webpack --watch",
         "serve-dev": "webpack-dev-server",
         "test": "jest",
         "test:update": "jest -u",
         "test:coverage": "jest --coverage",
         "flow": "flow",
-        "server": "node server.js --NODE_ENV=server"
+        "dev": "SET NODE_ENV=development&&node server.js",
+        "start": "SET NODE_ENV=production&&node server.js"
     },
     "keywords": ["React", "Intro"],
     "author": "jftabord@gmail.com",
@@ -27,6 +29,7 @@
     "dependencies": {
         "axios": "^0.18.0",
         "babel-register": "^6.26.0",
+        "compression": "^1.7.2",
         "cors": "^2.8.4",
         "express": "^4.16.3",
         "lodash": "^4.17.10",

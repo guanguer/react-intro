@@ -7,6 +7,8 @@ const ReactDomServer = require('react-dom/server');
 const ReactRouter = require('react-router-dom');
 const lodash = require('lodash');
 const fs = require('fs');
+const compression = require('compression');
+
 const webpackDevMiddleware = require('webpack-dev-middleware');
 const webpackHotMiddleware = require('webpack-hot-middleware');
 const webpack = require('webpack');
@@ -21,16 +23,18 @@ const template = lodash.template(baseTemplate);
 
 const server = express();
 
-const compiler = webpack(config);
+if (process.env.NODE_ENV === 'development') {
+    const compiler = webpack(config);
+    server.use(
+        webpackDevMiddleware(compiler, {
+            publicPath: config.output.publicPath
+        })
+    );
+    server.use(webpackHotMiddleware(compiler));
+}
 
-server.use(
-    webpackDevMiddleware(compiler, {
-        publicPath: config.output.publicPath
-    })
-);
-server.use(webpackHotMiddleware(compiler));
-
-server.use('/dist', express.static('./dist'));
+server.use(compression());
+server.use('/', express.static('./dist'));
 
 server.use((req, res) => {
     const context = {};

@@ -2,13 +2,9 @@ const path = require('path');
 const webpack = require('webpack');
 const CopyWebpackPlugin = require('copy-webpack-plugin');
 
-module.exports = {
+const config = {
     context: __dirname,
-    entry: [
-        'webpack-hot-middleware/client?path=__webpack_hmr&timeout=2000',
-        './src/client-app.jsx'
-    ],
-    devtool: 'cheap-eval-source-map',
+    entry: ['./src/client-app.jsx'],
     output: {
         path: path.join(__dirname, 'dist'),
         filename: 'bundle.js',
@@ -49,7 +45,20 @@ module.exports = {
                 ignore: ['*.jsx', '*.js', '__test__/**/*']
             }
         ]),
-        new webpack.HotModuleReplacementPlugin(),
         new webpack.NamedModulesPlugin()
     ]
 };
+
+if (process.env.NODE_ENV === 'development') {
+    config.entry = [
+        'webpack-hot-middleware/client?path=__webpack_hmr&timeout=2000',
+        ...config.entry
+    ];
+    config.plugins = [
+        ...config.plugins,
+        new webpack.HotModuleReplacementPlugin()
+    ];
+    config.devtool = 'cheap-eval-source-map';
+}
+
+module.exports = config;

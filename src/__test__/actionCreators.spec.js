@@ -2,7 +2,8 @@
 
 import moxios from 'moxios';
 
-import { setSearchTerm, addApiData, getApiData } from '../actionCreators';
+import { setSearchTerm, addApiData } from '../actionCreators';
+import getApiData from '../asyncActions';
 
 const blackMirror = {
     rating: '5.6',

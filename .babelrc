@@ -20,7 +20,7 @@
         "babel-plugin-transform-class-properties"
     ],
     "env": {
-        "server": {
+        "production": {
             "plugins": ["transform-es2015-modules-commonjs"]
         },
         "development": {

@@ -62,3 +62,11 @@ export type HeaderProps = {
 export type PathParam = {
     match: Match
 };
+
+export type AsyncRouteState = {
+    loaded: false
+};
+
+export type AsyncRouteProps = {
+    loadingPromise: Promise<{ default: Class<React.Component<*, *, *>> }>
+};

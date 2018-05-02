@@ -5,7 +5,7 @@ import { connect } from 'react-redux';
 
 import Header from './Header';
 import Spinner from './Spinner';
-import { getApiData } from './actionCreators';
+import getApiData from './asyncActions';
 
 class Details extends Component<DetailProps> {
     componentDidMount() {
@@ -30,7 +30,7 @@ class Details extends Component<DetailProps> {
                     <h2>({year})</h2>
                     {ratingComponent}
                     <img
-                        src={`/dist/img/posters/${poster}`}
+                        src={`/img/posters/${poster}`}
                         alt={`${title} Show Poster`}
                     />
                     <p>{description}</p>
