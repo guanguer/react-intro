@@ -1,14 +1,11 @@
 const path = require('path');
 const webpack = require('webpack');
-const HtmlWebpackPlugin = require('html-webpack-plugin');
 const CopyWebpackPlugin = require('copy-webpack-plugin');
 
 module.exports = {
     context: __dirname,
     entry: [
-        'react-hot-loader/patch',
-        'webpack-dev-server/client?http://localhost:8080',
-        'webpack/hot/only-dev-server',
+        'webpack-hot-middleware/client?path=__webpack_hmr&timeout=2000',
         './src/client-app.jsx'
     ],
     devtool: 'cheap-eval-source-map',
@@ -46,13 +43,10 @@ module.exports = {
         ]
     },
     plugins: [
-        new HtmlWebpackPlugin({
-            template: './src/index.html'
-        }),
         new CopyWebpackPlugin([
             {
                 from: 'src',
-                ignore: ['*.jsx', '*.js', '*.html', '__test__/**/*']
+                ignore: ['*.jsx', '*.js', '__test__/**/*']
             }
         ]),
         new webpack.HotModuleReplacementPlugin(),

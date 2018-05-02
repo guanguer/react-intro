@@ -15,12 +15,7 @@ export const addApiData = (apiData: Show) => ({
 });
 
 export const getApiData = (imdbID: string) => (dispatch: Function) => {
-    axios
-        .get(`http://localhost:3000/${imdbID}`)
-        .then(response => {
-            dispatch(addApiData(response.data));
-        })
-        .catch(err => {
-            console.log('axios error', err);
-        });
+    axios.get(`http://localhost:3000/${imdbID}`).then(response => {
+        dispatch(addApiData(response.data));
+    });
 };

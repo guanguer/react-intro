@@ -30,7 +30,7 @@ class Details extends Component<DetailProps> {
                     <h2>({year})</h2>
                     {ratingComponent}
                     <img
-                        src={`/img/posters/${poster}`}
+                        src={`/dist/img/posters/${poster}`}
                         alt={`${title} Show Poster`}
                     />
                     <p>{description}</p>

@@ -39,7 +39,7 @@ class ShowCard extends Component<DetailProps> {
         return (
             <Wrapper className="show-card" to={`/details/${imdbID}`}>
                 <Image
-                    src={`img/posters/${poster}`}
+                    src={`/dist/img/posters/${poster}`}
                     alt={`${title} Show Poster`}
                 />
                 <div>

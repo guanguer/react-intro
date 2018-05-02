@@ -2,12 +2,18 @@
 
 import React from 'react';
 import { render } from 'react-dom';
+import { BrowserRouter } from 'react-router-dom';
 import App from './App';
 
 const renderApp = () => {
     const element = document.getElementById('app');
     if (element !== null) {
-        render(<App />, element);
+        render(
+            <BrowserRouter>
+                <App />
+            </BrowserRouter>,
+            element
+        );
     }
 };
 
